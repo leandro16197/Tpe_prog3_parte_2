@@ -4,7 +4,6 @@ public class Main {
         GrafoDirigido grafo = new GrafoDirigido();
         CSVReader reader = new CSVReader();
         reader.read(grafo);
-        Vertice nuevo=new Vertice("viajes");
         System.out.println(grafo.getList());
     }
 

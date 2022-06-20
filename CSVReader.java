@@ -6,15 +6,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class CSVReader {
-    String path="C:\\Users\\Lang Tecnologia\\IdeaProjects\\TPE_prog3_parte_2\\src\\Genero\\dataset1.csv";
+    String path="C:\\Users\\Nahue\\eclipse-workspace\\TPEPROG3_PARTE2\\Genero\\dataset1.csv";
 
     public void read(Grafo grafo) {
         ArrayList<String[]> lines = this.readContent();
         for(int i=0;i<lines.size();i++){
             String [] informacion=lines.get(i)[0].split(",");
             Vertice vertice=new Vertice(informacion[0]);
-            String []aux=informacion[1].split(" ");
-            for(int j=0;i<aux.length;i++){
+            String []aux=informacion[0].split(" ");
+            for(int j=0;j<aux.length;j++){
                 Vertice nuevo=new Vertice(aux[j]);
                 grafo.agregarVertice(vertice,nuevo);
             }
