@@ -1,32 +1,37 @@
+package Tpe_prog3_parte_2;
 
 public class Arco<T> {
 
-	private String verticeOrigen;
-	private String verticeDestino;
-	private T etiqueta;
+	private Vertice verticeOrigen;
+	private Vertice verticeDestino;
+	private Integer etiqueta;
 
-	public Arco(String verticeOrigen, String verticeDestino, T etiqueta) {
+	public Arco(Vertice verticeOrigen, Vertice verticeDestino, int i) {
 		this.verticeOrigen = verticeOrigen;
 		this.verticeDestino = verticeDestino;
-		this.etiqueta = etiqueta;
+		this.etiqueta = i;
 	}
 	
-	public String getVerticeOrigen() {
+	public Vertice getVerticeOrigen() {
 		return verticeOrigen;
 	}
 	
-	public String getVerticeDestino() {
+	public Vertice getVerticeDestino() {
 		return verticeDestino;
 	}
 
-	public T getEtiqueta() {
+	public Integer getEtiqueta() {
 		return etiqueta;
+	}
+
+	public void setEtiqueta(Integer cantidad){
+		this.etiqueta=+cantidad;
 	}
 
 	@Override
 	public boolean equals(Object o) {
 		Arco a=(Arco)o;
-		if(this.verticeOrigen==a.getVerticeOrigen() && this.verticeDestino==a.getVerticeDestino()){
+		if(this.verticeOrigen.getId()==a.getVerticeOrigen().getId() && this.verticeDestino.getId()==a.getVerticeDestino().getId()){
 			return true;
 		}
 		return false;

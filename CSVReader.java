@@ -1,3 +1,4 @@
+package Tpe_prog3_parte_2;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -6,18 +7,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class CSVReader {
-    String path="C:\\Users\\Nahue\\eclipse-workspace\\TPEPROG3_PARTE2\\Genero\\dataset1.csv";
+    String path="src\\Tpe_prog3_parte_2\\Genero\\dataset1.csv";
 
     public void read(Grafo grafo) {
         ArrayList<String[]> lines = this.readContent();
         for(int i=0;i<lines.size();i++){
             String [] informacion=lines.get(i)[0].split(",");
-            Vertice vertice=new Vertice(informacion[0]);
-            String []aux=informacion[0].split(" ");
-            for(int j=0;j<aux.length;j++){
-                Vertice nuevo=new Vertice(aux[j]);
-                grafo.agregarVertice(vertice,nuevo);
-            }
+
+           for(int j=0;j<informacion.length-1;j++){
+               grafo.agregarVertice(informacion[j],informacion[j+1]);
+
+           }
         }
     }
 

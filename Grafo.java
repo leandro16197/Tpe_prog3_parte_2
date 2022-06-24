@@ -1,18 +1,20 @@
+package Tpe_prog3_parte_2;
+
 import java.util.Iterator;
 
 public interface Grafo<T> {
 	
 	// Agrega un vertice 
-	public void agregarVertice(Vertice verticeId, Vertice aux);
+	public void agregarVertice(String v1,String v2);
 
 	// Borra un vertice
 	public void borrarVertice(Vertice verticeId);
 
 	// Agrega un arco con una etiqueta, que conecta el verticeId1 con el verticeId2
-	public void agregarArco(Vertice verticeId1, Vertice verticeId2, T etiqueta);
+	public void agregarArco(Vertice verticeId1, Vertice verticeId2,Integer a);
 
 	// Borra el arco que conecta el verticeId1 con el verticeId2
-	public void borrarArco(Vertice verticeId1, Vertice verticeId2);
+	//public void borrarArco(Vertice verticeId1, Vertice verticeId2);
 
 	// Verifica si existe un vertice
 	public boolean contieneVertice(Vertice verticeId);

@@ -1,3 +1,5 @@
+package Tpe_prog3_parte_2;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -10,13 +12,27 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	}
 
 	@Override
-	public void agregarVertice(Vertice vertice, Vertice vertice2) {
-		Integer contador=0;
-			if(this.contieneVertice(vertice)==false) {
-				this.vertice.add(new Vertice(vertice.toString()));
-				this.agregarArco(vertice,vertice2, (T) contador);
-				contador++;
+	public void agregarVertice(String v1,String v2) {
+		Vertice nuevo=new Vertice(v1);
+		Vertice nuevo2=new Vertice(v2);
+
+			if(this.contieneVertice(nuevo)==false) {
+				this.vertice.add(nuevo);
 			}
+			if(this.contieneVertice(nuevo2)==false){
+				this.vertice.add(nuevo2);
+			}
+
+			int pos=this.getPosVertice(nuevo);
+			int pos2=this.getPosVertice(nuevo2);
+			if(!this.existeArco(this.vertice.get(pos),this.vertice.get(pos2))){
+				this.agregarArco(nuevo,nuevo2,1);
+			}else {
+				Arco<T> a=this.obtenerArco(this.vertice.get(pos),this.vertice.get(pos2));
+				a.setEtiqueta(a.getEtiqueta()+1);
+				System.out.println(a.getEtiqueta());
+			}
+
 
 	}
 
@@ -24,31 +40,21 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	public void borrarVertice(Vertice verticeId) {
 
 	}
-	public ArrayList getList(){return this.vertice;}
+	public ArrayList<Vertice> getList(){return this.vertice;}
 	@Override
-	public void agregarArco(Vertice verticeId1, Vertice verticeId2, T etiqueta) {
+	public void agregarArco(Vertice verticeId1,Vertice v2,Integer valor) {
 		int pos = this.getPosVertice(verticeId1);
-		if(pos>0){
-			if (this.contieneVertice(verticeId2) == true) {
-				this.vertice.get(pos).addAdyasentes(verticeId2,etiqueta);
+		if(pos>=0){
+			if (this.contieneVertice(v2) == true) {
+				this.vertice.get(pos).addAdyasentes(v2,valor);
 			}
 		}
 	}
 
 	@Override
-	public void borrarArco(Vertice verticeId1, Vertice verticeId2) {
-		int pos = this.getPosVertice(verticeId1);
-		if(pos>0){
-			if (this.contieneVertice(verticeId2) == true) {
-				this.vertice.get(pos).deleteArco(verticeId2.toString());
-			}
-		}
-	}
-
-	@Override
-	public boolean contieneVertice(Vertice verticeId) {
+	public boolean contieneVertice(Vertice vertice) {
 		for(int i=0;i<this.vertice.size();i++){
-			if(this.vertice.get(i).getId()==verticeId.toString()){
+			if(this.vertice.get(i).getId().equals(vertice.getId())){
 				return true;
 			}
 		}
@@ -58,9 +64,9 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	@Override
 	public boolean existeArco(Vertice verticeId1, Vertice verticeId2) {
 		int pos = this.getPosVertice(verticeId1);
-		if(pos>0) {
+		if(pos>=0) {
 			if (this.contieneVertice(verticeId2)==true){
-				return this.vertice.get(pos).contiene(verticeId2.toString());
+				return this.vertice.get(pos).contiene(verticeId2);
 			}
 		}
 		return false;
@@ -69,9 +75,10 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	@Override
 	public Arco<T> obtenerArco(Vertice verticeId1, Vertice verticeId2) {
 		int pos=this.getPosVertice(verticeId1);
-		if(pos>0){
+		int pos2=this.getPosVertice(verticeId2);
+		if(pos>=0){
 			if(this.contieneVertice(verticeId2)==true){
-				return this.vertice.get(pos).getArco(verticeId2.toString());
+				return this.vertice.get(pos).getArco(verticeId2);
 			}
 		}
 		return null;
@@ -140,7 +147,7 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	}
 	private int getPosVertice(Vertice verticeId){
 		for(int i=0;i<this.vertice.size();i++){
-			if(this.vertice.get(i).getId().equals(verticeId.toString())){
+			if(this.vertice.get(i).getId().equals(verticeId.getId())){
 				return i;
 			}
 		}
