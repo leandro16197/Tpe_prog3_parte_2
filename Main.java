@@ -7,6 +7,8 @@ public class Main {
         CSVReader reader = new CSVReader();
         reader.read(grafo);
         System.out.println(grafo.getList());
+        System.out.println(grafo.getMasBuscado("informática",1000000));
+
     }
 
 }

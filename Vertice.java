@@ -41,6 +41,7 @@ public class Vertice<T> {
     public void setId(String id) {
         this.id = id;
     }
+
     public ArrayList<Vertice> getIdAdyasentes(){
         ArrayList<Vertice> aux=new ArrayList<Vertice>();
         for(int i=0;i<this.adyasentes.size();i++){
@@ -51,9 +52,7 @@ public class Vertice<T> {
     public int adyasentesSize(){
         return this.adyasentes.size();
     }
-    public ArrayList getAdyasentes() {
-        return adyasentes;
-    }
+
     public ArrayList<Arco> getListaArco(){
         return this.adyasentes;
     }

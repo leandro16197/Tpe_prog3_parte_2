@@ -1,5 +1,6 @@
 package Tpe_prog3_parte_2;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -25,12 +26,12 @@ public class GrafoDirigido<T> implements Grafo<T> {
 
 			int pos=this.getPosVertice(nuevo);
 			int pos2=this.getPosVertice(nuevo2);
+
 			if(!this.existeArco(this.vertice.get(pos),this.vertice.get(pos2))){
 				this.agregarArco(nuevo,nuevo2,1);
 			}else {
 				Arco<T> a=this.obtenerArco(this.vertice.get(pos),this.vertice.get(pos2));
 				a.setEtiqueta(a.getEtiqueta()+1);
-				System.out.println(a.getEtiqueta());
 			}
 
 
@@ -161,26 +162,47 @@ public class GrafoDirigido<T> implements Grafo<T> {
 		return aux;
 	}
 
-	public ArrayList<Vertice> getMasBuscado(Vertice v,int cantidad){
-		ArrayList<Vertice>aux=new ArrayList<>();
-		Iterator it=ordenArcos(v.getAdyasentes());
-		while(it.hasNext() && cantidad!=0){
-			Vertice siguiente=(Vertice)it.next();
-			if(cantidad>0) {
-				aux.add(siguiente);
+	public ArrayList<String> getMasBuscado(String v,int cantidad){
+		ArrayList<String>aux=new ArrayList<>();
+		int pos =this.getVertice(v);
+		if(pos>=0){
+			Iterator temp=OrdenarPorEtiqueta(this.vertice.get(pos).getListaArco()).iterator();
+			while(temp.hasNext() && cantidad>0){
+				Arco a=(Arco) temp.next();
+				aux.add(a.getVerticeDestino().getId());
 				cantidad--;
 			}
 		}
 		return aux;
 	}
 
-	private Iterator ordenArcos(ArrayList adyasentes) {
-		ArrayList aux=new ArrayList();
-		aux = adyasentes;
-		Collections.sort(aux);
-		Collections.reverse(aux);
-		Iterator it=aux.iterator();
-		return it;
+	private ArrayList<Arco> OrdenarPorEtiqueta(ArrayList listaArco) {
+		ArrayList <Arco> t=listaArco;
+		Collections.sort(t,new comparable());
+		Collections.reverse(t);
+		return t;
 	}
 
+	private int getVertice(String v) {
+		for(int i=0;i<this.vertice.size();i++){
+			if(this.vertice.get(i).getId().equals(v)){
+				return i;
+			}
+		}
+		return -1;
+	}
+	public ArrayList<String> secuenciaDeGeneros(String genero){
+		ArrayList aux=new ArrayList();
+		int pos =this.getVertice(genero);
+		Iterator it=this.vertice.get(pos).getListaArco().iterator();
+		while(it.hasNext()){
+			Arco a=seleccion(it);//criterio
+
+
+		}
+		return aux;
+	}
+
+	private Arco seleccion(Iterator it) {
+	}
 }
