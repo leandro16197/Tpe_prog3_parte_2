@@ -7,7 +7,12 @@ public class Main {
         CSVReader reader = new CSVReader();
         reader.read(grafo);
         System.out.println(grafo.getList());
-        System.out.println(grafo.getMasBuscado("informática",1000000));
+        GrafoDirigido g=new GrafoDirigido();
+        g=(GrafoDirigido) grafo.dfs("viajes");
+        if(g!=null){
+            System.out.println(g.getList());
+        }
+
 
     }
 

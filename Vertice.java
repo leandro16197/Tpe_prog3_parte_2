@@ -13,7 +13,7 @@ public class Vertice<T> {
 
     public void addAdyasentes(Vertice v1,Integer arco){
         if(this.contiene(v1)==false){
-            Arco a=new Arco(this,v1,1);
+            Arco a=new Arco(this,v1,arco);
             this.adyasentes.add(a);
         }
     }
@@ -26,7 +26,7 @@ public class Vertice<T> {
         }
         return false;
     }
-    public Arco<T> getArco(Vertice id){
+    public Arco getArco(Vertice id){
         for(int i=0;i<this.adyasentesSize();i++){
             if(this.adyasentes.get(i).getVerticeDestino().equals(id)){
                 return this.adyasentes.get(i);
@@ -34,6 +34,7 @@ public class Vertice<T> {
         }
         return null;
     }
+
     public String getId() {
         return this.id;
     }
@@ -67,9 +68,17 @@ public class Vertice<T> {
         }
         return false;
     }
-
     @Override
-    public String toString() {
-        return id;
+    public boolean equals(Object obj) {
+        Vertice o =(Vertice) obj;
+        if(this.getId() == o.getId()){
+            return true;
+        }
+        return false;
     }
+    public String toString(){
+        return this.getId();
+    }
+
+
 }

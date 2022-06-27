@@ -6,10 +6,10 @@ public class Arco<T> {
 	private Vertice verticeDestino;
 	private Integer etiqueta;
 
-	public Arco(Vertice verticeOrigen, Vertice verticeDestino, int i) {
+	public Arco(Vertice verticeOrigen, Vertice verticeDestino, int cantidad) {
 		this.verticeOrigen = verticeOrigen;
 		this.verticeDestino = verticeDestino;
-		this.etiqueta = i;
+		this.etiqueta =cantidad;
 	}
 	
 	public Vertice getVerticeOrigen() {
