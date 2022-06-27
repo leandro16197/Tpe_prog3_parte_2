@@ -6,12 +6,8 @@ public class Main {
         GrafoDirigido grafo = new GrafoDirigido();
         CSVReader reader = new CSVReader();
         reader.read(grafo);
-        System.out.println(grafo.getList());
         GrafoDirigido g=new GrafoDirigido();
-        g=(GrafoDirigido) grafo.dfs("viajes");
-        if(g!=null){
-            System.out.println(g.getList());
-        }
+        System.out.println(grafo.dfs("viajes"));
 
 
     }

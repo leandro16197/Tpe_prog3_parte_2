@@ -1,8 +1,5 @@
 package Tpe_prog3_parte_2;
 
-import javafx.scene.shape.Arc;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -11,11 +8,11 @@ import java.util.Iterator;
 public class GrafoDirigido<T> implements Grafo<T> {
   private ArrayList<Vertice> vertice;
   private HashMap map;
-
+  private ArrayList<Vertice> subGrafo;
 	public GrafoDirigido() {
 		this.vertice =new ArrayList<Vertice>();
 		this.map=new HashMap<Vertice,String>();
-
+		this.subGrafo =new ArrayList();
 	}
 
 	@Override
@@ -201,18 +198,20 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	public ArrayList<String> secuenciaDeGeneros(String genero){
 		ArrayList aux=new ArrayList();
 		int pos =this.getVertice(genero);
-		Iterator it=this.vertice.get(pos).getListaArco().iterator();
-		while(it.hasNext()){
-			Arco arco=(Arco) it.next();
-			Vertice v=arco.getVerticeDestino();
-            Vertice a=seleccion(this.vertice.get(this.getVertice(v.getId())).getListaArco());
-			if(!aux.contains(a)){
-				aux.add(a);
+		if(pos>=0){
+			Iterator it=this.vertice.get(pos).getListaArco().iterator();
+			while(it.hasNext()){
+				Arco arco=(Arco) it.next();
+				String v=arco.getVerticeDestino().getId();
+				Vertice a=seleccion(this.vertice.get(this.getVertice(v)).getListaArco());
+				if(!aux.contains(a)){
+					aux.add(a);
+				}
 			}
-
 		}
 		return aux;
 	}
+
 	private Vertice seleccion(ArrayList array) {
 		Integer max=0;
 		Vertice verTemp = null;
@@ -237,44 +236,45 @@ public class GrafoDirigido<T> implements Grafo<T> {
 				this.map.put(this.vertice.get(posicion),"blanco");
 			}
 
-			ArrayList aux=new ArrayList();
-			ArrayList<Vertice> temp=new ArrayList();
+			ArrayList<Vertice> aux=new ArrayList();
+			ArrayList<Vertice>temp=new ArrayList();
 			Iterator it2=v.getListaArco().iterator();
-
 			while(it2.hasNext()){
 				Arco arco=(Arco)it2.next();
 				if(this.map.get(arco.getVerticeDestino()).equals("blanco")) {
 					temp=dfs_visit(arco.getVerticeDestino().getId(),genero,aux);
 				}
 			}
-			return subGrafo(temp);
+			return subGrafo(this.subGrafo);
 		}
 		return null;
 	}
 
-	private ArrayList dfs_visit(String origen, String destino, ArrayList aux) {
-		System.out.println(origen);
+	private Grafo subGrafo(ArrayList<Vertice> temp) {
+		System.out.println(temp);
+		Grafo g=new GrafoDirigido();
+		for(int i=0;i<temp.size()-1;i++){
+			g.agregarVertice(temp.get(i).getId(),temp.get(i+1).getId());
+		}
+		return g;
+	}
+
+	private ArrayList<Vertice> dfs_visit(String origen, String destino, ArrayList<Vertice> aux) {
 		int posOrigen=this.getVertice(origen);
 		this.map.replace(this.vertice.get(posOrigen),"amarillo");
 		if(origen.equals(destino)){
-			ArrayList lista=new ArrayList();
-			lista.add(this.vertice.get(posOrigen));
-			aux.add(lista);
-			 return aux;
+			aux.add(this.vertice.get(posOrigen));
+			System.out.println(aux);
+			return aux;
 		}else{
 			Iterator it=this.vertice.get(posOrigen).getListaArco().iterator();
 			while(it.hasNext()){
 				Arco a=(Arco)it.next();
 				int posicion=this.getVertice(a.getVerticeDestino().getId());
 				if(this.map.get(this.vertice.get(posicion)).equals("blanco")){
+					aux.add(this.vertice.get(posOrigen));
 					aux.addAll(dfs_visit(a.getVerticeDestino().getId(),destino,aux));
-				}else {
-					if(this.map.get(this.vertice.get(posicion)).equals("amarillo")){
-						ArrayList temp=new ArrayList();
-						temp.add(this.vertice.get(posicion));
-						System.out.println(temp);
-						return temp;
-					}
+					return aux;
 				}
 			}
 		}
@@ -282,12 +282,5 @@ public class GrafoDirigido<T> implements Grafo<T> {
 		return aux;
 	}
 
-	private Grafo subGrafo(ArrayList<Vertice> v) {
-		Grafo g=new GrafoDirigido();
-		for(int i=0;i<v.size()-1;i++){
-			g.agregarVertice(v.get(i).getId(),v.get(i+1).getId());
-		}
-		return g;
-	}
 
 }
