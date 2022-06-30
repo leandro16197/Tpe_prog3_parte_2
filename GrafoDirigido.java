@@ -236,51 +236,53 @@ public class GrafoDirigido<T> implements Grafo<T> {
 				this.map.put(this.vertice.get(posicion),"blanco");
 			}
 
-			ArrayList<Vertice> aux=new ArrayList();
-			ArrayList<Vertice>temp=new ArrayList();
+			ArrayList<String> aux=new ArrayList();
+			aux.add(genero);
 			Iterator it2=v.getListaArco().iterator();
 			while(it2.hasNext()){
 				Arco arco=(Arco)it2.next();
 				if(this.map.get(arco.getVerticeDestino()).equals("blanco")) {
-					temp=dfs_visit(arco.getVerticeDestino().getId(),genero,aux);
+					return dfs_visit(arco.getVerticeDestino().getId(),genero,aux);
 				}
 			}
-			return subGrafo(this.subGrafo);
 		}
 		return null;
 	}
 
-	private Grafo subGrafo(ArrayList<Vertice> temp) {
-		System.out.println(temp);
-		Grafo g=new GrafoDirigido();
-		for(int i=0;i<temp.size()-1;i++){
-			g.agregarVertice(temp.get(i).getId(),temp.get(i+1).getId());
-		}
-		return g;
-	}
-
-	private ArrayList<Vertice> dfs_visit(String origen, String destino, ArrayList<Vertice> aux) {
+	private GrafoDirigido dfs_visit(String origen, String destino, ArrayList<String> aux) {
 		int posOrigen=this.getVertice(origen);
 		this.map.replace(this.vertice.get(posOrigen),"amarillo");
 		if(origen.equals(destino)){
-			aux.add(this.vertice.get(posOrigen));
-			System.out.println(aux);
-			return aux;
+			aux.add(destino);
+			return subGrafo(aux);
 		}else{
 			Iterator it=this.vertice.get(posOrigen).getListaArco().iterator();
+
 			while(it.hasNext()){
+
 				Arco a=(Arco)it.next();
+
 				int posicion=this.getVertice(a.getVerticeDestino().getId());
+
 				if(this.map.get(this.vertice.get(posicion)).equals("blanco")){
-					aux.add(this.vertice.get(posOrigen));
-					aux.addAll(dfs_visit(a.getVerticeDestino().getId(),destino,aux));
-					return aux;
+
+					aux.add(this.vertice.get(posOrigen).getId());
+
+					return dfs_visit(a.getVerticeDestino().getId(),destino,aux);
 				}
 			}
 		}
 		this.map.replace(this.vertice.get(posOrigen),"negro");
-		return aux;
+		return null;
 	}
 
+	private GrafoDirigido subGrafo(ArrayList<String> lista) {
+		GrafoDirigido g=new GrafoDirigido();
+		for(int i=0;i<lista.size()-1;i++) {
+			System.out.println(lista.get(i)+"-"+lista.get(i+1));
+			g.agregarVertice(lista.get(i),lista.get(i+1));
+		}
+		return g;
+	}
 
 }

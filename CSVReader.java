@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
     public class CSVReader {
         public static void read(Grafo grafo) {
-            String csvFile="src\\Tpe_prog3_parte_2\\Genero\\dataset1.csv";
+            String csvFile="src\\Tpe_prog3_parte_2\\Genero\\dataset4.csv";
             String line = "";
             String cvsSplitBy = ",";
 

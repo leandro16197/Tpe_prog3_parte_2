@@ -6,10 +6,8 @@ public class Main {
         GrafoDirigido grafo = new GrafoDirigido();
         CSVReader reader = new CSVReader();
         reader.read(grafo);
-        GrafoDirigido g=new GrafoDirigido();
-        System.out.println(grafo.dfs("viajes"));
-
-
+        GrafoDirigido g=(GrafoDirigido) grafo.dfs("viajes");
+        System.out.println(g.getList());//lista de vertises del subGrafo
     }
 
 }
